@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,5 +58,15 @@ public class StudentControllerTest {
             .andExpect(content().json("{\n" +
                                       "  \"id\" : 1\n" +
                                       "}"));
+    }
+
+    @Test
+    public void testRegisterOfStudentForCourse() throws Exception {
+        // given
+        // when
+        mockMvc.perform(get("/student/register/course/1")
+                            .header("userId", 1))
+            // then
+            .andExpect(status().isOk());
     }
 }

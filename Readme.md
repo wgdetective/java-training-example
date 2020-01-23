@@ -154,12 +154,14 @@ Response:
 
 Пока что заявка на запись будет приниматься автоматически, но в дальнейшем она должна будет вначале быть согласовано преподавателем.   
 
+Запрос помещен в домен /student/, т к решено что этой операцией меняется состояние студента, а не курса
+
 Request:
 
-`GET /java-training-app/course/${courseId}/register`
+`GET /java-training-app/student/register/course/${courseId}`
 
 `Headers: userId=1` 
 
-
 Response:
 `200 OK`
+

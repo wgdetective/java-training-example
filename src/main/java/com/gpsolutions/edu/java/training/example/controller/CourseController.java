@@ -27,10 +27,4 @@ public class CourseController {
                "  }\n" +
                "]";
     }
-
-    @GetMapping(value = "/{courseId}/register")
-    public void register(@PathVariable final Long courseId,
-                         @RequestHeader final Long userId) {
-        log.info(String.format("Registration of user (%d) on course (%d)", userId, courseId));
-    }
 }

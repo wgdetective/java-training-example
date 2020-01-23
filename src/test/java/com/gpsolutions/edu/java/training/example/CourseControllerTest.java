@@ -37,14 +37,4 @@ public class CourseControllerTest {
                                       "  }\n" +
                                       "]"));
     }
-
-    @Test
-    public void testRegisterOfStudentForCourse() throws Exception {
-        // given
-        // when
-        mockMvc.perform(get("/course/1/register")
-                            .header("userId", 1))
-            // then
-            .andExpect(status().isOk());
-    }
 }

@@ -1,5 +1,10 @@
 package com.gpsolutions.edu.java.training.example.controller;
 
+import com.gpsolutions.edu.java.training.example.dto.StudentSignUpRequest;
+import com.gpsolutions.edu.java.training.example.dto.UserSignInRequest;
+import com.gpsolutions.edu.java.training.example.service.StudentOnCourseService;
+import com.gpsolutions.edu.java.training.example.service.StudentService;
+import lombok.Data;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,25 +20,29 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Wladimir Litvinov
  */
+@Log
+@Data
 @RestController
 @RequestMapping("/student")
-@Log
 public class StudentController {
+
+    private final StudentService studentService;
+    private final StudentOnCourseService studentOnCourseService;
 
     @PostMapping(value = "/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public String singUp(@RequestBody final String request) {
-        return "{\"id\":1}";
+    public String singUp(@RequestBody final StudentSignUpRequest request) {
+        return studentService.signUp(request);
     }
 
     @PostMapping(value = "/sign-in", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String singIn(@RequestBody final String request) {
-        return "{\"id\":1}";
+    public String singIn(@RequestBody final UserSignInRequest request) {
+        return studentService.signIn(request);
     }
 
     @GetMapping(value = "/register/course/{courseId}")
     public void register(@PathVariable final Long courseId,
-                         @RequestHeader final Long userId) {
-        log.info(String.format("Registration of user (%d) on course (%d)", userId, courseId));
+                         @RequestHeader final Long studentId) {
+        studentOnCourseService.registerOnCourse(studentId, courseId);
     }
 }

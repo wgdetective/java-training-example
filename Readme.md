@@ -95,7 +95,7 @@ Request:
   "email" : "vasya@email.com",
   "password" : "qwerty",
   "fio" : "Пупкин Василий Иванович",
-  "gender" : "male", 
+  "gender" : "MALE", 
   "birthDate" : "19.01.1995",
   "info" : "Молодой инженер" 
 }
@@ -160,7 +160,7 @@ Request:
 
 `GET /java-training-app/student/register/course/${courseId}`
 
-`Headers: userId=1` 
+`Headers: studentId=1` 
 
 Response:
 `200 OK`

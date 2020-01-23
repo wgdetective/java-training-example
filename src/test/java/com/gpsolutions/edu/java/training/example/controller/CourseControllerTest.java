@@ -1,4 +1,4 @@
-package com.gpsolutions.edu.java.training.example;
+package com.gpsolutions.edu.java.training.example.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

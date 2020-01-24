@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Log
 @Service
 public class StudentOnCourseService {
-    public void registerOnCourse(final Long studentId, final Long courseId) {
-        log.info(String.format("Registration of student (%d) on course (%d)", studentId, courseId));
+    public void registerOnCourse(final String email, final Long courseId) {
+        log.info(String.format("Registration of student (%s) on course (%d)", email, courseId));
     }
 }

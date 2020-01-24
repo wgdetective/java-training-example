@@ -4,6 +4,7 @@ import com.gpsolutions.edu.java.training.example.dto.Course;
 import com.gpsolutions.edu.java.training.example.service.CourseService;
 import lombok.Data;
 import lombok.extern.java.Log;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,12 +17,12 @@ import java.util.List;
 @Log
 @Data
 @RestController
-@RequestMapping("/course")
+@RequestMapping(value = "/course", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
 public class CourseController {
 
     private final CourseService courseService;
 
-    @GetMapping(value = "/list")
+    @GetMapping
     public List<Course> getList() {
         return courseService.getList();
     }

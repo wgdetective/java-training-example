@@ -85,7 +85,7 @@ Project for providing and examples for Java Trainings.
 В первую очередь начнем с работы "Студента" с системой.
 Сложная аутентификация  и работа с токенами пока вне скоупа, предпологается что пользователь будет передавать свой id как header.
 
-### JTEP-1 Как "Студент" я хочу зарегистрироваться в системе, и, если такого пользователя не найдено, регистрируюсь
+### JTEP-1 Как "Студент" я хочу зарегистрироваться в системе, и, если такого пользователя не найдено, регистрируюсь и получаю JWT токен для работы в системе
 
 Request:
 
@@ -105,7 +105,7 @@ Response:
 `201 CREATED`
 ```json
 {
-  "id" : 1
+  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YXN5YUBlbWFpbC5jb20iLCJleHAiOjE1Nzk5MDQ2OTksImlhdCI6MTU3OTg2ODY5OX0.8JG6O4U5F3xyOlOTyeSfl3Siim91HiJ-d4Dz5Guse8I"
 }
 ```
 
@@ -125,15 +125,17 @@ Response:
 `200 OK`
 ```json
 {
-  "id" : 1
+  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YXN5YUBlbWFpbC5jb20iLCJleHAiOjE1Nzk5MDQ2OTksImlhdCI6MTU3OTg2ODY5OX0.8JG6O4U5F3xyOlOTyeSfl3Siim91HiJ-d4Dz5Guse8I"
 }
 ```
 
 ### JTEP-3 Как "Студент" я хочу получить список доступных курсов, и в результате получаю его   
 
+Перед отправкой нужно войти в систему.
+
 Request:
 
-`GET /java-training-app/course/list`
+`GET /java-training-app/course`
 
 Response:
 `200 OK`
@@ -154,13 +156,13 @@ Response:
 
 Пока что заявка на запись будет приниматься автоматически, но в дальнейшем она должна будет вначале быть согласовано преподавателем.   
 
-Запрос помещен в домен /student/, т к решено что этой операцией меняется состояние студента, а не курса
+Запрос помещен в домен /student/, т к решено что этой операцией меняется состояние студента, а не курса.
 
 Request:
 
 `GET /java-training-app/student/register/course/${courseId}`
 
-`Headers: studentId=1` 
+`Headers: Authorization=Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YXN5YUBlbWFpbC5jb20iLCJleHAiOjE1Nzk5MDQ2OTksImlhdCI6MTU3OTg2ODY5OX0.8JG6O4U5F3xyOlOTyeSfl3Siim91HiJ-d4Dz5Guse8I` 
 
 Response:
 `200 OK`

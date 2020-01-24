@@ -109,6 +109,18 @@ Response:
 }
 ```
 
+Если email либо пароль неверные, то пользователь получит следующий ответ:
+
+Если пользоветель с таким email уже существует, то будет возвращено:
+
+Response:
+`403 Forbidden`
+```json
+{
+  "errorMessage" : "Wrong email or password."
+}
+```
+
 ### JTEP-2 Как "Студент", будучи зарегистрированным пользователем, я хочу войти в систему, и, если такой пользователь существует и пароль совпадает, войти в систему
 
 Request:
@@ -128,6 +140,12 @@ Response:
   "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YXN5YUBlbWFpbC5jb20iLCJleHAiOjE1Nzk5MDQ2OTksImlhdCI6MTU3OTg2ODY5OX0.8JG6O4U5F3xyOlOTyeSfl3Siim91HiJ-d4Dz5Guse8I"
 }
 ```
+
+Если пользоветель с таким email уже существует, то будет возвращено:
+
+Response:
+`403 Forbidden`
+
 
 ### JTEP-3 Как "Студент" я хочу получить список доступных курсов, и в результате получаю его   
 
@@ -166,4 +184,21 @@ Request:
 
 Response:
 `200 OK`
+
+В том случае если курс не существует либо уже закончился, то записаться не удасться.
+
+Response:
+`400 Bad Request`
+```json
+{
+  "errorMessage" : "Course is already finished"
+}
+```
+
+`400 Bad Request`
+```json
+{
+  "errorMessage" : "No course with id=${courseId} was found"
+}
+```
 

@@ -17,7 +17,7 @@ import java.util.List;
 
 import static com.gpsolutions.edu.java.training.example.security.Roles.STUDENT;
 import static org.hamcrest.Matchers.hasLength;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,8 +41,7 @@ public abstract class AbstractControllerTest {
     protected String signInAsStudent() throws Exception {
         final User user = new User("vasya@email.com", passwordEncoder.encode("qwerty"),
                                    List.of(new SimpleGrantedAuthority("ROLE_" + STUDENT.name())));
-        given(loadUserDetailService.loadUserByUsername("vasya@email.com"))
-            .willReturn(user);
+        willReturn(user).given(loadUserDetailService).loadUserByUsername("vasya@email.com");
         final String response = mockMvc.perform(post("/student/sign-in")
                                                     .contentType(MediaType.APPLICATION_JSON)
                                                     .content("{\n" +

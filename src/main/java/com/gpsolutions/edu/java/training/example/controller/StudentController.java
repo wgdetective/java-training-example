@@ -1,5 +1,7 @@
 package com.gpsolutions.edu.java.training.example.controller;
 
+import com.gpsolutions.edu.java.training.example.exception.BadCourseOperationException;
+import com.gpsolutions.edu.java.training.example.exception.NoSuchCourseException;
 import com.gpsolutions.edu.java.training.example.service.StudentOnCourseService;
 import com.gpsolutions.edu.java.training.example.service.StudentService;
 import lombok.Data;
@@ -25,7 +27,8 @@ public class StudentController {
 
     @GetMapping(value = "/register/course/{courseId}")
     public void register(@PathVariable final Long courseId,
-                         final Authentication authentication) {
+                         final Authentication authentication)
+        throws BadCourseOperationException, NoSuchCourseException {
         studentOnCourseService.registerOnCourse(authentication.getName(), courseId);
     }
 }

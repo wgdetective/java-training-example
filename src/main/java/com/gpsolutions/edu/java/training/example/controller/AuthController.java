@@ -3,7 +3,7 @@ package com.gpsolutions.edu.java.training.example.controller;
 import com.gpsolutions.edu.java.training.example.dto.StudentSignUpRequest;
 import com.gpsolutions.edu.java.training.example.dto.UserSignInRequest;
 import com.gpsolutions.edu.java.training.example.dto.UserSignInResponse;
-import com.gpsolutions.edu.java.training.example.excetion.SuchUserAlreadyExistException;
+import com.gpsolutions.edu.java.training.example.exception.SuchUserAlreadyExistException;
 import com.gpsolutions.edu.java.training.example.security.JwtUtil;
 import com.gpsolutions.edu.java.training.example.service.StudentService;
 import lombok.AllArgsConstructor;

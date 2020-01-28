@@ -4,7 +4,8 @@ package com.gpsolutions.edu.java.training.example.exception;
  * @author Wladimir Litvinov
  */
 public class NoSuchCourseException extends Exception {
-    public NoSuchCourseException() {
+
+	public NoSuchCourseException() {
         super();
     }
 

@@ -6,6 +6,7 @@ import com.gpsolutions.edu.java.training.example.dto.UserSignInResponse;
 import com.gpsolutions.edu.java.training.example.exception.SuchUserAlreadyExistException;
 import com.gpsolutions.edu.java.training.example.security.JwtUtil;
 import com.gpsolutions.edu.java.training.example.service.StudentService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,14 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * @author Wladimir Litvinov
  */
 @RestController
 @AllArgsConstructor
 public class AuthController {
+
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
@@ -34,7 +34,7 @@ public class AuthController {
     @PostMapping(value = "/student/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public UserSignInResponse singUp(@RequestBody final StudentSignUpRequest request)
-        throws SuchUserAlreadyExistException {
+            throws SuchUserAlreadyExistException {
         studentService.signUp(request);
         return singIn(new UserSignInRequest(request.getEmail(), request.getPassword()));
     }
@@ -42,10 +42,11 @@ public class AuthController {
     @PostMapping(value = "/student/sign-in", consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserSignInResponse singIn(@RequestBody final UserSignInRequest request) {
         authenticationManager
-            .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
         return new UserSignInResponse(
-            jwtUtil.generateToken(
-                new User(request.getEmail(), request.getPassword(), List.of(new SimpleGrantedAuthority("STUDENT")))));
+                jwtUtil.generateToken(
+                        new User(request.getEmail(), request.getPassword(),
+                                List.of(new SimpleGrantedAuthority("STUDENT")))));
     }
 }

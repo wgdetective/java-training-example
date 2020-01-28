@@ -1,5 +1,7 @@
 package com.gpsolutions.edu.java.training.example.security;
 
+import static com.gpsolutions.edu.java.training.example.security.Roles.STUDENT;
+
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -10,8 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static com.gpsolutions.edu.java.training.example.security.Roles.STUDENT;
 
 /**
  * @author Wladimir Litvinov
@@ -26,16 +26,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            //.httpBasic()
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/student/register/course/*").hasRole(STUDENT.name())
-            .antMatchers(HttpMethod.GET, "/course").hasRole(STUDENT.name())
-            .antMatchers(HttpMethod.POST, "/student/sign-in", "/student/sign-up").permitAll()
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .formLogin().disable();
+                //.httpBasic()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/student/register/course/*").hasRole(STUDENT.name())
+                .antMatchers(HttpMethod.GET, "/course").hasRole(STUDENT.name())
+                .antMatchers(HttpMethod.POST, "/student/sign-in", "/student/sign-up").permitAll()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .formLogin().disable();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

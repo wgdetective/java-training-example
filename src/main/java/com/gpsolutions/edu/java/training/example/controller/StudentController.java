@@ -27,8 +27,8 @@ public class StudentController {
 
     @GetMapping(value = "/register/course/{courseId}")
     public void register(@PathVariable final Long courseId,
-                         final Authentication authentication)
-        throws BadCourseOperationException, NoSuchCourseException {
+            final Authentication authentication)
+            throws BadCourseOperationException, NoSuchCourseException {
         studentOnCourseService.registerOnCourse(authentication.getName(), courseId);
     }
 }

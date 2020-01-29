@@ -11,7 +11,6 @@ import lombok.Data;
 @Data
 @Builder
 public class Course {
-
     private Long id;
     private String title;
     private String description;

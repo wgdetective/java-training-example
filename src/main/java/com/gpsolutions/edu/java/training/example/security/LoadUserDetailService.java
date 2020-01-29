@@ -1,14 +1,15 @@
 package com.gpsolutions.edu.java.training.example.security;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import com.gpsolutions.edu.java.training.example.entity.AuthInfoEntity;
+import com.gpsolutions.edu.java.training.example.repository.AuthInfoRepository;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,21 +19,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoadUserDetailService implements UserDetailsService {
 
-    private final PasswordEncoder passwordEncoder;
-
-    private final Map<String, String> inMemoryUsers = new HashMap<>();
+    private final AuthInfoRepository authInfoRepository;
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        final String password = inMemoryUsers.get(username);
-        if (password == null) {
+        final Optional<AuthInfoEntity> authInfoEntity = authInfoRepository.findByLogin(username);
+        if (authInfoEntity.isEmpty()) {
             throw new UsernameNotFoundException("User with email: " + username + " not found");
         } else {
-            return new User(username, password, Collections.emptyList());
+            final SimpleGrantedAuthority authority = new SimpleGrantedAuthority(
+                    "ROLE_" + authInfoEntity.get().getUser().getUserRole().name());
+            return new User(username, authInfoEntity.get().getPassword(), List.of(authority));
         }
-    }
-
-    public void saveUser(final String username, final String password) {
-        inMemoryUsers.put(username, passwordEncoder.encode(password));
     }
 }

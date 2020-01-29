@@ -6,11 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 /**
  * @author Wladimir Litvinov
@@ -20,6 +18,8 @@ public class AuthControllerTest extends AbstractControllerTest {
     @Test
     public void testStudentSignUpIsCreated() throws Exception {
         // given
+        willReturn(Optional.empty(), Optional.of(createAuthInfo())).given(authInfoRepository)
+                .findByLogin("vasya@email.com");
         // when
         mockMvc.perform(post("/student/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -58,9 +58,7 @@ public class AuthControllerTest extends AbstractControllerTest {
     @Test
     public void testStudentSignInIsOk() throws Exception {
         // given
-        final User user = new User("vasya@email.com", passwordEncoder.encode("qwerty"),
-                List.of(new SimpleGrantedAuthority("STUDENT")));
-        willReturn(user).given(loadUserDetailService).loadUserByUsername("vasya@email.com");
+        signInAsStudent();
         // when
         mockMvc.perform(post("/student/sign-in")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -76,9 +74,7 @@ public class AuthControllerTest extends AbstractControllerTest {
     @Test
     public void testStudentSignInWithWrongPassword() throws Exception {
         // given
-        final User user = new User("vasya@email.com", passwordEncoder.encode("qwerty"),
-                List.of(new SimpleGrantedAuthority("STUDENT")));
-        willReturn(user).given(loadUserDetailService).loadUserByUsername("vasya@email.com");
+        signInAsStudent();
         // when
         mockMvc.perform(post("/student/sign-in")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -93,9 +89,7 @@ public class AuthControllerTest extends AbstractControllerTest {
     @Test
     public void testStudentSignInWithWrongEmail() throws Exception {
         // given
-        final User user = new User("vasya@email.com", passwordEncoder.encode("qwerty"),
-                List.of(new SimpleGrantedAuthority("STUDENT")));
-        willReturn(user).given(loadUserDetailService).loadUserByUsername("vasya@email.com");
+        signInAsStudent();
         // when
         mockMvc.perform(post("/student/sign-in")
                 .contentType(MediaType.APPLICATION_JSON)

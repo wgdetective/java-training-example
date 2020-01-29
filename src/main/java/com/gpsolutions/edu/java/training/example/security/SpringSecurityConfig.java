@@ -1,6 +1,7 @@
 package com.gpsolutions.edu.java.training.example.security;
 
-import static com.gpsolutions.edu.java.training.example.security.Roles.STUDENT;
+import static com.gpsolutions.edu.java.training.example.security.UserRole.STUDENT;
+import static com.gpsolutions.edu.java.training.example.security.UserRole.TEACHER;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/student/register/course/*").hasRole(STUDENT.name())
-                .antMatchers(HttpMethod.GET, "/course").hasRole(STUDENT.name())
+                .antMatchers(HttpMethod.GET, "/course").hasAnyRole(STUDENT.name(), TEACHER.name())
                 .antMatchers(HttpMethod.POST, "/student/sign-in", "/student/sign-up").permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

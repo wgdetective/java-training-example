@@ -6,6 +6,8 @@ Project for providing and examples for Java Trainings.
 
 Приложение для предоставления расписания занятий на тренингах, контроля посещаемости и выставления оценок.
 
+Postman Project: https://www.getpostman.com/collections/8ec4cf56da2167621b5a
+
 ## Сущности
 Ниже перечисленный сущности в предметной области проекта и их поля.
 

@@ -11,11 +11,11 @@ import lombok.Data;
  * @author Wladimir Litvinov
  */
 @Data
-@Entity
+@Entity(name = "course")
 public class CourseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
